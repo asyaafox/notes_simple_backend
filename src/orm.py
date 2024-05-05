@@ -16,7 +16,7 @@ async def create_tables():
         print("Initialized the db")
 
 
-async def all_users(session: AsyncSession) -> List[User]:
+async def all_users(session: AsyncSession) -> list[User]:
     query = select(UsersOrm)
     result = await session.execute(query)
     return [
