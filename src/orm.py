@@ -1,6 +1,7 @@
+from typing import List
 from sqlalchemy import select
-from base import async_session_factory
-from base import async_engine, Base, async_session_factory
+
+from base import async_engine, Base
 from models import UsersOrm
 from sqlalchemy.ext.asyncio import AsyncSession
 from dto import User
@@ -15,8 +16,10 @@ async def create_tables():
         print("Initialized the db")
 
 
-async def all_users(session: AsyncSession):
+async def all_users(session: AsyncSession) -> List[User]:
     query = select(UsersOrm)
     result = await session.execute(query)
-    users = result.all()
-    print(users)
+    return [
+        User(id=user.id, name=user.name, created_at=user.created_at)
+        for user in result.scalars().all()
+    ]

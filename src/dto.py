@@ -1,15 +1,15 @@
 from pydantic import BaseModel
-import datetime
+from datetime import datetime
 
 
 class UserBase(BaseModel):
     name: str
-    email: str | None
 
 
 class User(UserBase):
-    created_at: datetime.datetime
-    notes: list["Note"]
+    id: int
+    created_at: datetime
+    # notes: list["Note"]
 
 
 class UserCreate(UserBase):
@@ -17,7 +17,6 @@ class UserCreate(UserBase):
 
 
 class NotesBase(BaseModel):
-    id: int
     name: str
     text: str
     author: int
@@ -30,5 +29,6 @@ class NoteCreate(NotesBase):
 
 
 class Note(NotesBase):
-    created_at: datetime.datetime
-    updated_at: datetime.datetime
+    id: int
+    created_at: datetime
+    updated_at: datetime

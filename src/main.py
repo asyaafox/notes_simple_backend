@@ -1,8 +1,10 @@
 import asyncio
+from fastapi import FastAPI
 import uvicorn
 from orm import create_tables, all_users
 from base import async_session_factory
 from models import UsersOrm
+from api import router as api_router
 
 
 async def test_add_users():
@@ -15,21 +17,28 @@ async def test_add_users():
         await session.commit()
 
 
-async def t():
-    async with async_session_factory() as session:
-        await all_users(session)
+# async def mainn():
+#     # await test_add_users()
+# asyncio.run(mainn())
+# uvicorn.run(app="src.main:app", reload=True, port=8081)
 
-
-async def main():
+"""
+async def test():
     await create_tables()
     await test_add_users()
-    await t()
+    async with async_session_factory() as session:
+        await all_users(session)
+asyncio.run(test())
+"""
 
-    # await test_add_users()
+app = FastAPI(title="notes")
+app.include_router(api_router)
 
 
-asyncio.run(main())
-# uvicorn.run(app="src.main:app", reload=True)
+@app.on_event("startup")
+async def startup_event():
+    await create_tables()
+    await test_add_users()
 
 
 """

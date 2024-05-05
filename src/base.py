@@ -1,11 +1,16 @@
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 
 from sqlalchemy.orm import DeclarativeBase
-
+from sqlalchemy.ext.asyncio import AsyncSession
 
 DATABASE_URL = "sqlite+aiosqlite:///notess.sqlite"
 async_engine = create_async_engine(url=DATABASE_URL, echo=True)
 async_session_factory = async_sessionmaker(async_engine)
+
+
+async def get_session() -> AsyncSession:
+    async with async_session_factory() as session:
+        yield session
 
 
 class Base(DeclarativeBase):
