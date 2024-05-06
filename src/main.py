@@ -9,7 +9,7 @@ from api import router as api_router
 
 async def test_add_users():
     async with async_session_factory() as session:
-        admin = UsersOrm(name="eee", email="sussy@baka.com")
+        admin = UsersOrm(name="eee")
         tiii = UsersOrm(name="bebebe")
         session.add(tiii)
         session.add(admin)

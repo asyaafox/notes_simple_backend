@@ -23,7 +23,7 @@ class UsersOrm(Base):
     id: Mapped[intpk]
     name: Mapped[str]
     created_at: Mapped[created_at]
-    email: Mapped[str | None] = String(128)
+    # email: Mapped[str | None] = String(128)
     password: Mapped[str] = String(128)
     notes: Mapped[list["NotesOrm"]] = relationship(back_populates="author")
 
